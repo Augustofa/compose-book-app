@@ -31,9 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-@Preview
 fun BookSearchScreen(
-    viewModel: BookViewModel = viewModel()
+    viewModel: BookViewModel = viewModel(),
+    onBookClick: (String) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -71,7 +71,7 @@ fun BookSearchScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(uiState.books) { book ->
-                        BookItem(book = book)
+                        BookItem(book = book, onBookClick = {onBookClick(book.workId)})
                     }
                 }
             }

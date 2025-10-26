@@ -1,5 +1,6 @@
 package me.augusto.composebookapp.presentation
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,15 +34,20 @@ import java.text.DecimalFormat
 import me.augusto.composebookapp.R
 
 @Composable
-fun BookItem(book: Book, modifier: Modifier = Modifier) {
+fun BookItem(
+    book: Book,
+    modifier: Modifier = Modifier,
+    onBookClick: () -> Unit
+) {
     Card(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable {onBookClick()},
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
     ) {
         Row(
             modifier = Modifier.height(150.dp)
         ) {
-            // Book Cover
             AsyncImage(
                 model = book.coverUrl,
                 contentDescription = book.title,
@@ -55,10 +61,9 @@ fun BookItem(book: Book, modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            // Book Details
             Column(
                 modifier = Modifier
-                    .weight(1f) // Takes remaining space
+                    .weight(1f)
                     .padding(vertical = 16.dp)
             ) {
                 Text(
@@ -76,9 +81,8 @@ fun BookItem(book: Book, modifier: Modifier = Modifier) {
                     overflow = TextOverflow.Ellipsis
                 )
 
-                Spacer(modifier = Modifier.weight(1f)) // Pushes content below to the bottom
+                Spacer(modifier = Modifier.weight(1f))
 
-                // Bottom row for Year and Rating
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.fillMaxWidth()
@@ -88,7 +92,6 @@ fun BookItem(book: Book, modifier: Modifier = Modifier) {
                         style = MaterialTheme.typography.bodySmall
                     )
                     Spacer(modifier = Modifier.weight(1f))
-                    // Show rating if available
                     book.averageRating?.let {
                         BookRating(rating = it, modifier = Modifier.padding(end = 16.dp))
                     }
@@ -132,7 +135,8 @@ fun BookItemPreview() {
                 workId = "1",
                 averageRating = 4.567
             ),
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
+            onBookClick = {}
         )
     }
 }

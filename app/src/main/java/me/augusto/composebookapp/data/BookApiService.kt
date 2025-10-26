@@ -17,4 +17,9 @@ interface BookApiService {
     suspend fun getRating(
         @Path(value = "workId", encoded = true) workId: String
     ): Response<RatingResponse>
+
+    @GET("works/{workId}.json")
+    suspend fun getBookDetails(
+        @Path("workId") workId: String
+    ): Response<BookDetailsResponse>
 }
