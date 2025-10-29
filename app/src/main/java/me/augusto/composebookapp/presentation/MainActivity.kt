@@ -5,13 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -21,8 +16,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.modifier.modifierLocalOf
+import me.augusto.composebookapp.data.Book
 import me.augusto.composebookapp.presentation.theme.BookSearchAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -45,24 +39,24 @@ fun MainMenu(modifier: Modifier) {
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        var selectedWorkId by rememberSaveable { mutableStateOf<String?>(null) }
+        var selectedBook: Book? by rememberSaveable { mutableStateOf(null) }
 
-        if (selectedWorkId == null) {
+        if (selectedBook == null) {
             BookSearchScreen(
-                onBookClick = { workId ->
-                    selectedWorkId = workId
+                onBookClick = { book ->
+                    selectedBook = book
                 }
             )
         } else {
             BookDetailScreen(
-                workId = selectedWorkId!!,
+                book = selectedBook!!,
                 onBackClick = {
-                    selectedWorkId = null
+                    selectedBook = null
                 }
             )
 
             BackHandler {
-                selectedWorkId = null
+                selectedBook = null
             }
         }
     }

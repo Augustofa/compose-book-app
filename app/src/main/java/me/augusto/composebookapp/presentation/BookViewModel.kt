@@ -40,7 +40,6 @@ class BookViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            // Call the repository object
             val result = repository.searchBooks(_uiState.value.searchQuery)
 
             result.fold(

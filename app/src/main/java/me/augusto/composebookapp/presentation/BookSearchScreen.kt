@@ -26,14 +26,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import me.augusto.composebookapp.data.Book
 
 @Composable
 fun BookSearchScreen(
     viewModel: BookViewModel = viewModel(),
-    onBookClick: (String) -> Unit
+    onBookClick: (Book) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -71,7 +71,7 @@ fun BookSearchScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     items(uiState.books) { book ->
-                        BookItem(book = book, onBookClick = {onBookClick(book.workId)})
+                        BookItem(book = book, onBookClick = {onBookClick(book)})
                     }
                 }
             }

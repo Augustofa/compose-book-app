@@ -69,12 +69,11 @@ object BookRepository {
                 return Result.failure(Exception("No details found"))
             }
 
-            // Transform API data to our clean UI model
             val cleanDetails = BookDetails(
                 workId = workId,
                 title = details.title,
-                description = details.description?.value ?: "No description available.",
-                subjects = details.subjects?.take(10) ?: emptyList(), // Take first 10
+                description = details.description?: "No description available.",
+                subjects = details.subjects?.take(10) ?: emptyList(),
                 coverUrl = details.coverIds?.firstOrNull()?.let {
                     "https://covers.openlibrary.org/b/id/$it-L.jpg"
                 }
